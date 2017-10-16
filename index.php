@@ -343,6 +343,8 @@
 //         $Ville = new Ville('bruxelle','Belgique');
 //         $Ville->afficherVille();
 
+
+
 // ORIENTE OBJET EXERCICE 3
 // class Personne{
 //   private $_nom;
@@ -408,18 +410,55 @@ class Form{
   private $_text;
   private $_submit;
 
-  public function __construct(){
+  public function __construct(array $donnees){
+       $this->hydrate($donnees);
+     }
 
+   public function hydrate(array $donnees){
+     foreach ($donnees as $key => $value)
+     {
+       $method = 'set'.ucfirst($key);
+
+       if (method_exists($this, $method))
+       {
+         $this->$method($value);
+       }
+     }
+   }
+
+  public function formulaire(){
+    echo '<form>
+    <fieldset>
+      '.$this->text().'
+    </fieldset>
+    '.$this->submit().'
+    </form>';
   }
 
-  public function setText($input){
-    $this->_text += $text;
+  public function text(){
+    return $this->_text;
+  }
+
+  public function submit(){
+    return $this->_submit;
+  }
+
+  public function setText($text){
+    $this->_text .= $text;
   }
   public function setSubmit($submit){
     $this->_submit = $submit;
   }
 
 }
+
+$formulaire = new Form([
+  'text'=>'<input type="text" name="input" value="" />',
+  'submit'=>'<input type="submit" name="valide" value="valider" />'
+]);
+// var_dump($formulaire);
+$formulaire->formulaire();
+$formulaire->setText('<input type="text" name="input" value="" />');
 
 ?>
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

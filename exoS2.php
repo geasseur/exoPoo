@@ -158,8 +158,9 @@ class ChatManager{
   }
 
   public function afficheChat(){
-    $afficheChat->execute('SELECT couleur, portes, prix from Clio');
-    return fetchAll($afficheChat);
+    $afficheChat= $this->_bdd->query('SELECT nom, age, sexe, pelage from Chat');
+    
+    return $afficheChat->fetchAll();
   }
 }
 
@@ -245,21 +246,4 @@ class Chat{
     }
   }
 }
-
-$neera = new Chat([
-  'nom'=>'ne',
-  'age'=>13,
-  'sexe'=>'male',
-  'pelage'=>'blanc'
-]);
-
-$test = new Chat([
-  'nom'=>'test',
-  'age'=>18,
-  'sexe'=>'male',
-  'pelage'=>'gris'
-]);
-$bdd = new PDO('mysql:host=localhost;dbname=exoPoo', 'root', 'root');
-$manager = new ChatManager($bdd);
-$manager->addChat($test);
  ?>

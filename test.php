@@ -38,3 +38,15 @@ require "controleurChat.php";
           <input type="radio" name="pelage" value="gris"><br>
           <input type="submit" name="" value="valider">
         </form>
+        <?php foreach ($chats as $donnees) {
+          ?>
+          <article class="">
+            <h2><?php echo $donnees['nom'];?></h2>
+            <p><?php echo $donnees['age'] ?></p>
+            <p><?php if ($donnees['sexe'] == 0) {
+              echo 'femelle';
+            } ?></p>
+            <p><?php echo $donnees['pelage'] ?></p>
+          </article>
+          <?php
+        } ?>

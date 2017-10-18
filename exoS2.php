@@ -137,6 +137,32 @@
 ///////////////////////////////EXO 2///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
+class ChatManager{
+  private $_bdd;
+
+  public function __construct($bdd){
+    $this->setBdd($bdd);
+  }
+
+  public function setBdd($bdd){
+    $this->_bdd = $bdd;
+  }
+
+  public function addChat(Chat $chat){
+    $ajoutChat = $this->_bdd->prepare('INSERT INTO Chat(nom, age, sexe, pelage) VALUES (:nom, :age, :sexe, :pelage)');
+    $ajoutChat->bindValue(':nom', $chat->nom());
+    $ajoutChat->bindValue(':age', $chat->age(), PDO::PARAM_INT);
+    $ajoutChat->bindValue(':sexe', $chat->sexe(), PDO::PARAM_INT);
+    $ajoutChat->bindValue(':pelage', $chat->pelage(), PDO::PARAM_INT);
+    $ajoutChat->execute();
+  }
+
+  public function afficheChat(){
+    $afficheChat->execute('SELECT couleur, portes, prix from Clio');
+    return fetchAll($afficheChat);
+  }
+}
+
 class Chat{
   private $_nom;
   private $_age;
@@ -191,10 +217,10 @@ class Chat{
 
   public function setSexe($sexe){
     if ($sexe == 'male') {
-      $this->_sexe = Chat::MALE;
+      $this->_sexe = Self::MALE;
     }
     else if ($sexe == 'femelle') {
-      $this->_sexe = Chat::FEMELLE;
+      $this->_sexe = Self::FEMELLE;
     }
     else {
       echo "je n'ai pas compris choisissez entre male et femelle";
@@ -223,7 +249,7 @@ class Chat{
 $neera = new Chat([
   'nom'=>'ne',
   'age'=>13,
-  'sexe'=>'femelle',
+  'sexe'=>'male',
   'pelage'=>'blanc'
 ]);
 
@@ -233,6 +259,7 @@ $test = new Chat([
   'sexe'=>'male',
   'pelage'=>'gris'
 ]);
-var_dump($neera);
-var_dump($test);
+$bdd = new PDO('mysql:host=localhost;dbname=exoPoo', 'root', 'root');
+$manager = new ChatManager($bdd);
+$manager->addChat($test);
  ?>

@@ -6,11 +6,25 @@ class Utilisateur
   protected $_nom;
   protected $_livreEmprunter;
 
-  public function __construct($id, $nom, $livreEmprunter)
+  public function __construct(array $donnees)
   {
-    $this->setId($id);
-    $this->setNom($nom);
-    $this->setLivreEmprunter($livreEmprunter);
+    $this->hydrate($donnees);
+  }
+
+  public function hydrate(array $donnees)
+  {
+    foreach ($donnees as $key => $value)
+    {
+      // On récupère le nom du setter correspondant à l'attribut.
+      $method = 'set'.ucfirst($key);
+
+      // Si le setter correspondant existe.
+      if (method_exists($this, $method))
+      {
+        // On appelle le setter.
+        $this->$method($value);
+      }
+    }
   }
 
   public function id(){
@@ -36,7 +50,7 @@ class Utilisateur
     return $this->_livreEmprunter;
   }
 
-  public function emprunterLivre(Livre $livre){
-    echo "le livre de ".$livre->auteur()." a été emprunté";
+  public function emprunterLivre(Livre $livre, Utilisateur $moi){
+    echo "le livre de ".$livre->auteur()." a été emprunté par ".$moi->nom();
   }
 } ?>

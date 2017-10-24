@@ -12,15 +12,52 @@ $jeep = new Voiture([
   'nbPortes'=>3
 ]);
 
+$car = new Bus([
+  'immatriculation'=>432,
+  'couleur'=>'blue',
+  'nbEtage'=>2
+]);
+
 var_dump($jeep);
-$manager = $jeep->affiche();
-foreach ($manager as $donnees) {
+var_dump($car);
+$tabVoiture = [$jeep];
+$tabCar = [$car];
+foreach ($tabVoiture as $key => $value) {
   ?>
-   <article class="">
-     <p><?php echo $donnees['immatriculation'] ?></p><br>
-     <p><?php echo $donnees['couleur'] ?></p><br>
-     <p><?php echo $donnees['nbPortes'] ?></p>
-   </article>
+  <h3>voiture</h3>
+  <p>immatriculation : <?php echo $value->getImmatriculation(); ?></p>
+  <p> couleur : <?php echo $value->getCouleur(); ?></p>
+  <p> nbPortes :  <?php echo $value->getNbPortes(); ?> </p>
   <?php
- }
- ?>
+}
+
+foreach ($tabCar as $key => $value) {
+  ?>
+  <h3>Bus</h3>
+  <p> immatriculation : <?php echo $value->getImmatriculation(); ?></p>
+  <p> couleur : <?php echo $value->getCouleur(); ?></p>
+  <p> nbEtage :  <?php echo $value->getNbEtage(); ?> </p>
+  <?php
+}
+  $jeep->setCouleur('green');
+  $car->setNbEtage(3);
+
+  foreach ($tabVoiture as $key => $value) {
+    ?>
+    <h2>Après Modification</h2>
+    <h3>voiture</h3>
+    <p>immatriculation : <?php echo $value->getImmatriculation(); ?></p>
+    <p> couleur : <?php echo $value->getCouleur(); ?></p>
+    <p> nbPortes :  <?php echo $value->getNbPortes(); ?> </p>
+    <?php
+  }
+
+  foreach ($tabCar as $key => $value) {
+    ?>
+    <h3>Bus</h3>
+    <p> immatriculation : <?php echo $value->getImmatriculation(); ?></p>
+    <p> couleur : <?php echo $value->getCouleur(); ?></p>
+    <p> nbEtage :  <?php echo $value->getNbEtage(); ?> </p>
+    <?php
+  }
+  ?>

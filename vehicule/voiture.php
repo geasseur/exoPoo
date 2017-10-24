@@ -15,8 +15,6 @@ class Voiture extends Vehicule{
         return $this;
     }
 
-    public function affiche(){
-      return $this->fetchAll();
-    }
+
 
 } ?>
